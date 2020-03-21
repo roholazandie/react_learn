@@ -3,40 +3,32 @@ import Counter from "./counter";
 
 
 class Counters extends Component{
-    state = {
-        counters: [
-            {id: 1, value: 0},
-            {id: 2, value: 0},
-            {id: 3, value: 4},
-            {id: 4, value: 0},
-        ]
-    };
 
-
-    handleReset = () =>{
-        const counters = this.state.counters.map(c=>{
-            c.value = 0;
-            return c;
-        });
-
-        this.setState({counters});
-    };
-
-    handleDelete = counterId=>{
-        console.log("event handler called!", counterId);
-        const counters = this.state.counters.filter(c => c.id !== counterId);
-        this.setState({counters: counters});
-    };
+    // componentDidMount(prevProps, prevState) {
+    //     console.log("prevProps", prevProps);
+    //     console.log("prevState", prevState);
+    //     if(prevState.counter.value !== this.props.counter.value){
+    //         //ajax call and get new data from the server
+    //     }
+    // }
+    //
+    // componentWillMount() {
+    //     console.log("Counter Unmount")
+    // }
 
     render() {
+        //destructuring arguments
+        const {onReset, counters, onDelete, onIncrement} = this.props;
         return (
             <div>
                 <button
-                    onClick={this.handleReset}
-                    className="btn btn-primary btn-sm m-2">Reset</button>
-                {this.state.counters.map(counter => (
+                    onClick={onReset}
+                    className="btn btn-primary btn-sm m-2">Reset
+                </button>
+                {counters.map(counter => (
                     <Counter key={counter.id}
-                             onDelete={this.handleDelete}
+                             onDelete={onDelete}
+                             onIncrement={onIncrement}
                              counter = {counter}
                     >
                         <h4>
